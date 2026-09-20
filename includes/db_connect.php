@@ -1,23 +1,19 @@
 <?php
-// Database connection configuration for Rapid Rescue
-// Simple and readable database connection
+// Database connection configuration for Rapid Rescue.
+$password = getenv('RAPID_RESCUE_DB_PASSWORD') ?: '';
+$database = getenv('RAPID_RESCUE_DB_NAME') ?: 'ambulance';
+$server = getenv('RAPID_RESCUE_DB_HOST') ?: 'localhost';
+$username = getenv('RAPID_RESCUE_DB_USER') ?: 'root';
 
-$password = "";
-$database = "ambulance";
-$server = "localhost";
-$username = "root";
-
-// Create connection
 $conn = new mysqli($server, $username, $password, $database);
 
-// Check connection
 if ($conn->connect_error) {
-    die("Connection Error: " . $conn->connect_error);
+    die('Connection Error: ' . $conn->connect_error);
 }
 
-// Set charset to utf8 for proper character handling
-$conn->set_charset("utf8");
-
-// Optional: Set timezone
+$conn->set_charset('utf8');
 date_default_timezone_set('America/New_York');
+
+// Demo credentials are supplied only by the deployment environment.
+require_once __DIR__ . '/seed_demo_users.php';
 ?>
